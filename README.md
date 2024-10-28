@@ -3,7 +3,7 @@
 [中文说明](/README_CN.md)
 
 ## ✨ Demo
-[demo.mp4](https://github.com/user-attachments/assets/1613b307-73ad-4cf2-961a-7d6fe81bc8c2)
+[demo.mp4](https://github.com/user-attachments/assets/9cf679f1-b148-4c6d-8f0b-d81cafb806ca)
 
 Try it Online ⚡️:  [Animation Avatar](https://animate-avatar.netlify.app/)
 

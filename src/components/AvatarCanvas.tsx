@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AvatarCanvasProps {
   features: {
@@ -28,13 +28,15 @@ interface AvatarCanvasProps {
 const importSVG = (type: string, name: string) => import(`../assets/widgets/${type}/${name}.svg?raw`).then(module => module.default);
 
 export default function AvatarCanvas({ features, key = 0, isAnimated = true }: AvatarCanvasProps) {
-  const [svgContent, setSvgContent] = useState<string>('')
+  const [svgContent, setSvgContent] = useState<string>('');
   const [paths, setPaths] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 加载 SVG 路径
   useEffect(() => {
     (async () => {
       if (!features) return;
+      setIsLoading(true);
       const { body, head, face } = features;
       try {
         const bodyPath = await importSVG('body', body.shape);
@@ -44,6 +46,8 @@ export default function AvatarCanvas({ features, key = 0, isAnimated = true }: A
         setPaths([bodyPath, headPath, facePath]);
       } catch (error) {
         console.error('Error loading SVG:', error);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [features, key]);
@@ -91,6 +95,26 @@ export default function AvatarCanvas({ features, key = 0, isAnimated = true }: A
 
     setSvgContent(svgContent);
   }, [paths, key, isAnimated]);
+
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="relative">
+          {/* 主圆环 */}
+          <div className="w-10 h-10 border-4 border-gray-200 rounded-full"></div>
+          {/* 加载动画圆环 */}
+          <div className="absolute top-0 left-0 w-10 h-10 border-4 border-indigo-500 rounded-full 
+                          border-t-transparent animate-spin"></div>
+          
+          {/* 可选：添加加载文字 */}
+          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-500">
+            Loading...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 

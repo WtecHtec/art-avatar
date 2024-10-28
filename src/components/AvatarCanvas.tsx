@@ -20,34 +20,33 @@ interface AvatarCanvasProps {
     eyes: {
       shape: string
     }
-  }
+  },
+  key?: number;
+  isAnimated?: boolean;
 }
+
 const importSVG = (type: string, name: string) => import(`../assets/widgets/${type}/${name}.svg?raw`).then(module => module.default);
 
-export default function AvatarCanvas({ features }: AvatarCanvasProps) {
-  const [svgContent, setSvgContent] = useState<string>('');
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+export default function AvatarCanvas({ features, key = 0, isAnimated = true }: AvatarCanvasProps) {
+  const [svgContent, setSvgContent] = useState<string>('')
   const [paths, setPaths] = useState<string[]>([]);
 
   // 加载 SVG 路径
   useEffect(() => {
     (async () => {
       if (!features) return;
-      const { body, head, eyes } = features;
+      const { body, head, face } = features;
       try {
         const bodyPath = await importSVG('body', body.shape);
         const headPath = await importSVG('head', head.shape);
-        const eyesPath = await importSVG('eyes', eyes.shape);
-        const mouthPath = await importSVG('mouth', eyes.shape);
-        const nosePath = await importSVG('nose', eyes.shape);
-        const eyebrowsPath = await importSVG('eyebrows', eyes.shape);
+        const facePath = await importSVG('face', face.shape);
 
-        setPaths([bodyPath, headPath, eyesPath, mouthPath, nosePath, eyebrowsPath]);
+        setPaths([bodyPath, headPath, facePath]);
       } catch (error) {
         console.error('Error loading SVG:', error);
       }
     })();
-  }, [features]);
+  }, [features, key]);
 
   // 更新 SVG 内容
   useEffect(() => {
@@ -67,10 +66,10 @@ export default function AvatarCanvas({ features }: AvatarCanvasProps) {
     const svgContent = `
       <svg
         id="avatar-svg"
-        transform="translate(-30, 0)"
+        transform="translate(-40, 0)"
         width="380"
         height="380"
-        class="path1"
+        class="${isAnimated ? 'path1' : ''}"
         viewBox="0 0 700 700"
         fill="none"
         stroke="black"
@@ -80,7 +79,7 @@ export default function AvatarCanvas({ features }: AvatarCanvasProps) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <style>
-          @media (prefers-reduced-motion){.path1{animation:none!important;stroke-dasharray:unset!important}}@media print{.path1{animation:none!important;stroke-dasharray:unset!important}}@keyframes grow{0%{stroke-dashoffset:1px;stroke-dasharray:0 1000px;opacity:0;fill-opacity:0}10%{opacity:1;fill-opacity:0}60%{stroke-dasharray:1000px 0;fill-opacity:1;stroke-opacity:0}to{stroke-dasharray:1000px 0;fill-opacity:1;stroke-opacity:0}}.path1 g g path{stroke-dashoffset:1px;stroke-dasharray:1000px 0;animation:grow 10s ease forwards;transform-origin:center;stroke:#a2a0a0;stroke-width:10px;animation-delay:0s}
+          @media (prefers-reduced-motion){.path1{animation:none!important;stroke-dasharray:unset!important}}@media print{.path1{animation:none!important;stroke-dasharray:unset!important}}@keyframes grow{0%{stroke-dashoffset:1px;stroke-dasharray:0 1000px;opacity:0;fill-opacity:0}10%{opacity:1;fill-opacity:0}60%{stroke-dasharray:1000px 0;fill-opacity:1;stroke-opacity:0}to{stroke-dasharray:1000px 0;fill-opacity:1;stroke-opacity:0}}.path1 g g path{stroke-dashoffset:1px;stroke-dasharray:1000px 0;animation:grow 7s linear forwards;transform-origin:center;stroke:#a2a0a0;stroke-width:10px;animation-delay:0s}
         </style>
         <g>
           <g>
@@ -91,7 +90,7 @@ export default function AvatarCanvas({ features }: AvatarCanvasProps) {
     `;
 
     setSvgContent(svgContent);
-  }, [paths, mousePosition]);
+  }, [paths, key, isAnimated]);
 
   return (
     <div 

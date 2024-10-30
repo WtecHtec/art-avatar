@@ -17,6 +17,11 @@ An avatar generator that can create line-drawing animations showing the drawing 
 ## 💗  Credit
 - [openpeeps](https://www.openpeeps.com/)
 
+## 🏆 Sponsors
+
+- [@Terry Zhang](https://github.com/tzhangchi)
+- [@JiongXin](https://github.com/tonyljx)
+
 ## 👤 Author
 **YOYZHANG**
 

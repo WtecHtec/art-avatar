@@ -16,6 +16,13 @@
 ## 💗 感谢项目
 - [openpeeps](https://www.openpeeps.com/) - 提供头像
 
+
+## 🏆 赞助者
+感谢以下赞助者对项目的支持！ ❤️
+
+- [@Terry Zhang](https://github.com/tzhangchi)
+- [@JiongXin](https://github.com/tonyljx)
+
 ## 👤作者
 
 如果有任何疑问或技术上的交流，可以在 Twitter 或微信上联系我。

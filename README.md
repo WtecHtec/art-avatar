@@ -3,7 +3,7 @@
 [中文说明](/README_CN.md)
 
 ## ✨ Demo
-[demo.mp4](https://github.com/user-attachments/assets/1613b307-73ad-4cf2-961a-7d6fe81bc8c2)
+[demo.mp4](https://github.com/user-attachments/assets/9cf679f1-b148-4c6d-8f0b-d81cafb806ca)
 
 Try it Online ⚡️:  [Animation Avatar](https://animate-avatar.netlify.app/)
 
@@ -44,7 +44,7 @@ Please ⭐️ this repository if this project helped you!
 
 Your appreciation is my greatest strength in updating content！
 
-<a href="https://www.buymeacoffee.com/zhangxiaoqian" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://ko-fi.com/zhangxiaoqian" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 ---
 

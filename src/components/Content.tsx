@@ -10,7 +10,7 @@ interface ContentProps {
 
 export default function Content({ selectedFeatures }: ContentProps) {
   const [features, setFeatures] = useState<any>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(1);
   const [isAnimated, setIsAnimated] = useState(true);
 
   // 生成头像的核心逻辑
@@ -90,7 +90,7 @@ export default function Content({ selectedFeatures }: ContentProps) {
     : 'Generate';
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto pt-10">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
         Animated Art Avatar

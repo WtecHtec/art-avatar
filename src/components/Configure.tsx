@@ -70,7 +70,7 @@ export default function Configure({ selectedFeatures, setSelectedFeatures }: Con
   }, []);
 
   return (
-    <div className="h-full p-6 overflow-y-auto bg-gray-100 text-gray-700 w-80">
+    <div className="h-full p-6 overflow-y-auto bg-white text-gray-700 w-80">
       {isLoading ? (
         <div className="flex items-center justify-center h-full">
           <div className="flex flex-col items-center gap-2">

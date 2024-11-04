@@ -11,7 +11,7 @@ interface AvatarCanvasProps {
     face: {
       shape: string
     },
-    hair: {
+    facialHair: {
       shape: string
     },
     head: {
@@ -37,13 +37,14 @@ export default function AvatarCanvas({ features, key = 0, isAnimated = true }: A
     (async () => {
       if (!features) return;
       setIsLoading(true);
-      const { body, head, face } = features;
+      const { body, head, face, accessories } = features;
       try {
         const bodyPath = await importSVG('body', body.shape);
         const headPath = await importSVG('head', head.shape);
         const facePath = await importSVG('face', face.shape);
+        const accessoriesPath = await importSVG('accessories', accessories.shape);
 
-        setPaths([bodyPath, headPath, facePath]);
+        setPaths([bodyPath, headPath, facePath, accessoriesPath]);
       } catch (error) {
         console.error('Error loading SVG:', error);
       } finally {
@@ -63,6 +64,10 @@ export default function AvatarCanvas({ features, key = 0, isAnimated = true }: A
 
       if (index === 0) return `<g transform="translate(0, 550)">${content}</g>`;
       if (index === 1) return `<g transform="translate(200, 50)">${content}</g>`;
+
+      if (index === 2) return `<g transform="translate(320, 250)"><g>${content}</g></g>`;
+
+      if (index === 3) return `<g transform="translate(210, 310)"><g>${content}</g></g>`;
 
       return `<g transform="translate(320, 250)"><g>${content}</g></g>`;
     });

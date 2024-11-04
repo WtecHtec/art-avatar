@@ -8,7 +8,7 @@ export const SETTINGS = {
     'Glasses 5',
     'Sunglasses',
     'Sunglasses 2',
-
+    'Eyepatch',
   ],
   body:[
     'Blazer Black Tee',
@@ -69,7 +69,7 @@ export const SETTINGS = {
     'Tired',
     'Very Angry'
   ],
-  hair: [
+  facialHair: [
     'None',
     'Chin',
     'Full 2',

@@ -1,142 +1,56 @@
-import { useEffect, useState } from 'react';
-import { RefreshCw, Download, Star } from 'lucide-react';
-import AvatarCanvas from './components/AvatarCanvas';
-import { getRandomAvatarOption } from './utils/avatar-option';
+
+import { useState } from 'react';
+import Content from './components/Content';
 import Footer from './components/Footer';
-import { Switch } from './components/Switch';
+import Configure from './components/Configure';
 
 function App() {
-  const [features, setFeatures] = useState<any>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [isAnimated, setIsAnimated] = useState(true);
-
-  useEffect(() => {
-    const randomOption = getRandomAvatarOption()
-    setFeatures(randomOption)
-  }, [])
-
-  const regenerateAvatar = () => {
-    const randomOption = getRandomAvatarOption()
-    setFeatures(randomOption)
-  };
-
-  const downloadAvatar = () => {
-    const svg = document.querySelector('#avatar-svg');
-    if (!svg) return;
-
-    const serializer = new XMLSerializer();
-    const svgStr = serializer.serializeToString(svg);
-    const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'my-avatar.svg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
-  const handleRefresh = async () => {
-    setRefreshKey(prev => prev + 1);
-  };
+  const [isConfigOpen, setIsConfigOpen] = useState(true);
+  const [selectedFeatures, setSelectedFeatures] = useState({});
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-indigo-50 py-12 px-4">
-      <div className="max-w-md mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Animated Art Avatar
-          </h1>
-          <p className="text-gray-600">
-          Minimalist Animated Line Art Avatar Generator
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-indigo-50">
+      <div className="flex">
+        <Content selectedFeatures={selectedFeatures} />
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-          {/* 添加动画控制开关 */}
-          <div className="flex items-center justify-end mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">Animation</span>
-              <Switch
-                checked={isAnimated}
-                onChange={setIsAnimated}
-                className="relative inline-flex h-5 w-9"
-              />
-            </div>
-          </div>
-
-          <div className="aspect-square w-full mb-6 bg-gray-50 rounded-xl p-4 flex items-center justify-center">
-            <AvatarCanvas 
-              features={features} 
-              key={refreshKey}
-              isAnimated={isAnimated}
-            />
-          </div>
-
-          <div className="flex justify-center items-center gap-3">
-            {/* Generate Button */}
-            <button
-              onClick={regenerateAvatar}
-              className="group flex items-center gap-2.5 px-4 py-2 
-                         bg-gradient-to-r from-indigo-500 to-purple-500 
-                         text-white rounded-full shadow-sm 
-                         hover:shadow-md hover:from-indigo-600 hover:to-purple-600
-                         transition-all duration-200 ease-in-out"
+        {/* Configure Panel */}
+        <div className={`
+          fixed top-0 right-0 h-full w-80 bg-white/80 backdrop-blur-xl
+          shadow-lg transform transition-transform duration-300 ease-in-out
+          dark:bg-gray-800/90 dark:text-gray-100 z-10
+          ${isConfigOpen ? 'translate-x-0' : 'translate-x-full'}
+        `}>
+          <Configure
+            selectedFeatures={selectedFeatures}
+            setSelectedFeatures={setSelectedFeatures}
+          />
+          
+          {/* Toggle Button */}
+          <button
+            onClick={() => setIsConfigOpen(!isConfigOpen)}
+            className={`
+              absolute top-1/2 -left-10 p-2.5
+              bg-white dark:bg-gray-800 
+              rounded-l-xl shadow-lg
+              transform -translate-y-1/2
+              hover:bg-gray-50
+              transition-colors
+            `}
+          >
+            <svg
+              className={`w-5 h-5 transition-transform duration-300 ${isConfigOpen ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <Star 
-                size={16} 
-                className="group-hover:scale-110 transition-transform duration-300" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
               />
-              <span className="font-medium text-sm">Generate</span>
-            </button>
-
-            {/* Divider */}
-            <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2">
-              {/* Refresh Button */}
-              <button
-                onClick={handleRefresh}
-                className="group flex items-center gap-2 px-3 py-2 
-                             bg-white text-gray-600 rounded-full 
-                             border border-gray-200 
-                             hover:bg-gray-50 hover:border-gray-300
-                             transition-all duration-200 ease-in-out
-                             disabled:opacity-60 disabled:cursor-not-allowed
-                             dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700
-                             dark:hover:bg-gray-750"
-              >
-                <RefreshCw 
-                  size={16} 
-                  className="group-hover:rotate-180 transition-transform duration-500"
-                />
-                <span className="font-medium text-sm">Refresh</span>
-              </button>
-
-              {/* Download Button */}
-              <button
-                onClick={downloadAvatar}
-                className="group flex items-center gap-2 px-3 py-2 
-                             bg-gray-900 text-white rounded-full 
-                             shadow-sm hover:shadow-md hover:bg-black
-                             transition-all duration-200 ease-in-out
-                             dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100"
-              >
-                <Download 
-                  size={16} 
-                  className="group-hover:translate-y-0.5 transition-transform duration-200" 
-                />
-                <span className="font-medium text-sm">Download</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center text-sm text-gray-500">
-          Click generate for a new avatar, Download for the svg file.
+            </svg>
+          </button>
         </div>
       </div>
       <Footer />

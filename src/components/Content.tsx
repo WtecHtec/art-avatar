@@ -90,7 +90,7 @@ export default function Content({ selectedFeatures }: ContentProps) {
     : 'Generate';
 
   return (
-    <div className="max-w-md mx-auto pt-10">
+    <div className="max-w-md mx-auto pt-20">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
         Animated Art Avatar
